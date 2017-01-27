@@ -1,0 +1,32 @@
+Package: SuperFarmerPKEK
+Title: Gra SuperFarmer
+Version: 0.0.0.9000
+Authors@R: c(person("Ewelina", "Karbowiak", email = "ewelina.karbowiak12@gmail.com", role = c("aut")),
+            person("Pawel", "Kedzior",email="pawked@op.pl", role = c("cre")))
+Description: Pakiet SuperFarmerPKEK symuluje gre w SuperFarmera przy uzyciu
+    roznych strategii.W kazdej rundzie gry SuperFarmer program losuje zwierzeta
+    na dwoch kostkach.Gracz otrzymuje ze stada glownego tyle zwierzat wyrzuconego
+    gatunku, ile ma pelnych par tego gatunku, razem na kostkach i we wlasnym
+    stadzie.Wylosowanie lisa na ktorejkolwiek z kostek powoduje stracenie wszyskich
+    krolikow, a wylosowanie wilka podobuje stracenie wszystkich zwierzat poza
+    koniem.Przed lisem i wilkiem chronia odpowiednio maly pies i duzy pies.
+    Przed kazdym rzutem gracz moze dokonac wymiany zwierzat wedlug zadanej tabeli
+    wymian.Gracz wygrywa, gdy zdobedzieco najmniej po jednym zwierzeciu z sposrod:
+    krolikow, owiec, swin, krow i koni. Z pakiet umozliwia liczenie dlugosci
+    tur pojedynczen gry oraz 10 000 krotne powtorzenie gry w celu obliczenia
+    podstawowych statystyk dotyczace dlugosci gry.Z pomoca tego pakietu jest
+    mozliwosc, gdy za pomoca strategii pochodzacych z innych pakietow.
+Depends: R (>= 3.2.3)
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
+Suggests: testthat, knitr, rmarkdown
+Imports: ggplot2,
+    gridExtra
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2016-12-31 15:36:49 UTC; XNOTE
+Author: Ewelina Karbowiak [aut],
+  Pawel Kedzior [cre]
+Maintainer: Pawel Kedzior <pawked@op.pl>

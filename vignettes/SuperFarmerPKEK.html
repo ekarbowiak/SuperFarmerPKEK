@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Ewelina Karbowiak i Paweł Kędzior" />
+
+<meta name="date" content="2016-12-31" />
+
+<title>SuperFarmerPKEK</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div class="fluid-row" id="header">
+
+
+<h1 class="title">SuperFarmerPKEK</h1>
+<h4 class="author"><em>Ewelina Karbowiak i Paweł Kędzior</em></h4>
+<h4 class="date"><em>2016-12-31</em></h4>
+
+</div>
+
+
+<div id="gra-w-superfarmera" class="section level2">
+<h2>Gra w SuperFarmera</h2>
+<p>Pakiet <code>SuperFarmerPKEK</code> symuluję grę w SuperFarmera w wersji jednoosobowej. Dokładne zasady gry są dostępne na stronie: <a href="http://niewidzeprzeszkodzabrze.pl/wp-content/uploads/2016/02/SUPERFARMER.pdf">klik</a></p>
+</div>
+<div id="dane-dostepne-w-pakiecie" class="section level2">
+<h2>Dane dostępne w pakiecie</h2>
+<p>Do pakietu zostały przyłączone następujące zbiory danych:</p>
+<ul>
+<li><code>StadoGracza</code> - nazwany wektor z aktualnym stanem stada gracza (na początku gracz nie posiada żadnych zwierząt),</li>
+<li><code>max_stado</code> - nazwany wektor z maksymalna liczba zwierząt dostępną w grze,</li>
+<li><code>kostka1</code> - wektor nazw zwierząt, które znajdują się na kostce nr 1,</li>
+<li><code>kostka2</code> - wektor nazw zwierząt, które znajdują się na kostce nr 2,</li>
+<li><code>ceny_w_krolikach</code> - nazwany wektor wyrażający wartość w królikach poszczególnych zwierząt.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">t</span>(StadoGracza))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">krolik</th>
+<th align="right">owca</th>
+<th align="right">swinia</th>
+<th align="right">krowa</th>
+<th align="right">kon</th>
+<th align="right">maly_pies</th>
+<th align="right">duzy_pies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">t</span>(max_stado))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">krolik</th>
+<th align="right">owca</th>
+<th align="right">swinia</th>
+<th align="right">krowa</th>
+<th align="right">kon</th>
+<th align="right">maly_pies</th>
+<th align="right">duzy_pies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">60</td>
+<td align="right">24</td>
+<td align="right">20</td>
+<td align="right">12</td>
+<td align="right">6</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">t</span>(kostka1))</code></pre></div>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">owca</td>
+<td align="left">owca</td>
+<td align="left">owca</td>
+<td align="left">swinia</td>
+<td align="left">krowa</td>
+<td align="left">wilk</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">t</span>(kostka2))</code></pre></div>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">krolik</td>
+<td align="left">owca</td>
+<td align="left">owca</td>
+<td align="left">swinia</td>
+<td align="left">swinia</td>
+<td align="left">kon</td>
+<td align="left">lis</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">t</span>(ceny_w_krolikach))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">krolik</th>
+<th align="right">owca</th>
+<th align="right">swinia</th>
+<th align="right">krowa</th>
+<th align="right">kon</th>
+<th align="right">maly_pies</th>
+<th align="right">duzy_pies</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">12</td>
+<td align="right">36</td>
+<td align="right">72</td>
+<td align="right">6</td>
+<td align="right">36</td>
+</tr>
+</tbody>
+</table>
+<p>Kolejność zwierząt i sposób nazewnictwa został ustalony przez grupę.</p>
+</div>
+<div id="funkcja-gra" class="section level2">
+<h2>Funkcja gra</h2>
+<p>Funkcja <code>gra</code> przeprowadza pojedynczą grę w SuperFarmera i zwraca czas gry. Domyślnie argumenty kostka1, kostka2, oraz StadoGracza, które są zapisane w pakiecie jako zbiory danych, można zastąpić innymi tego samego typu.</p>
+<p><code>gra(strategia=SuperFarmerPKEK::strategy2, kostka1 = SuperFarmerPKEK::kostka1,kostka2 = SuperFarmerPKEK::kostka2,StadoGracza = SuperFarmerPKEK::StadoGracza)</code></p>
+<p>Przykład zastosowania:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gra</span>(<span class="dt">strategia =</span> strategy3)</code></pre></div>
+<pre><code>## [1] 40</code></pre>
+</div>
+<div id="funkcja-badaj_gre-i-badaj_gre2" class="section level2">
+<h2>Funkcja badaj_gre i badaj_gre2</h2>
+<p>Funkcja <code>badaj_gre</code> 10 000 powtarza grę zadaną strategią i na tej podstawie wyznacza podstawowe statystyki dotyczące czasu gry. Przykład zastosowania:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">badaj1&lt;-<span class="kw">badaj_gre</span>(strategy2)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">badaj1</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     9.0    27.0    36.0    40.9    50.0   173.0</code></pre>
+<p>Funkcja <code>badaj_gre2</code> również powtarza grę 10 000, ale zwraca wektor czasów gry:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">badaj2&lt;-<span class="kw">badaj_gre2</span>(strategy1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(badaj2,<span class="dv">15</span>)</code></pre></div>
+<pre><code>##  [1]  18  33  57  43  33  90  47 242  96  49 128  33  47  43  80</code></pre>
+<p>Wynik tej funkcji jest obiektem, który daje możliwość dalszej pracy z tymi danymi. Możemy np. narysować wykres:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">badaj3&lt;-<span class="kw">melt</span>(badaj2)
+g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(badaj3,<span class="kw">aes</span>(<span class="dt">x=</span>value))+<span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>..count..),<span class="dt">col=</span><span class="st">&quot;black&quot;</span>,<span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">500</span>,<span class="dv">5</span>))+
+<span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="st">&quot;Count&quot;</span>, <span class="dt">low =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;red&quot;</span>)
+g</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+</div>
+<div id="strategie" class="section level2">
+<h2>Strategie</h2>
+<div id="strategie-dostepne-w-pakiecie" class="section level3">
+<h3>Strategie dostępne w pakiecie</h3>
+<p>W pakiecie są dostępne trzy strategie: <code>strategy1</code>, <code>strategy2</code> i <code>strategy3</code>.</p>
+<p>*<code>strategy1</code>: najmniej skomplikowana strategia; zawsze gdy możemy, wymieniamy na większe zwierzę. Gdy wartość stada jest wystarczająca (przynajmniej 127 królików) wymianimy zwierzęta na brakujęce mniejsze, co kończy grę. Po testowaniu funkcją <code>gra()</code> z pakietu <code>SuperFarmerAGOJZB</code> dowiedzieliśmy się, że jest to strategia oszukańcza.</p>
+<p>*<code>strategy2</code>: najlepsza pod względem średniej liczby tur potrzebnych do zakończenia gry. Znów celem strategii jest jak najszybsze kupienie konia. Do tego momentu inwestujemy w króliki oraz małego psa.</p>
+<p>*<code>strategy3</code>: najbardziej skomplikowana strategia; podzielona jest na 8 części ze względu na wartość stada. Dobór tych przedziałów i stosowanych na nich podstrategii został wybrany na podstawie wyliczenia wartości oczekiwanej.</p>
+<p>W pakiecie jest dostępna funkcja <code>porownaj_strategie()</code>, która wywołana bez argumentów rysuje wykres skrzypcowy czasu gry dla tych trzech strategii przy powtórzeniu pojedynczej gry 10 000 razy.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wykres&lt;-<span class="kw">porownaj_strategie</span>()
+<span class="co">#save(wykres, file=&quot;wykres.rda&quot;)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/wykres.rda&quot;</span>)
+wykres</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">strategy1</th>
+<th align="right">strategy2</th>
+<th align="right">strategy3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Min.</td>
+<td align="right">8.00</td>
+<td align="right">9.00</td>
+<td align="right">9.00</td>
+</tr>
+<tr class="even">
+<td align="left">1st Qu.</td>
+<td align="right">35.00</td>
+<td align="right">26.00</td>
+<td align="right">28.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Median</td>
+<td align="right">55.00</td>
+<td align="right">35.00</td>
+<td align="right">41.00</td>
+</tr>
+<tr class="even">
+<td align="left">Mean</td>
+<td align="right">67.72</td>
+<td align="right">39.73</td>
+<td align="right">48.28</td>
+</tr>
+<tr class="odd">
+<td align="left">3rd Qu.</td>
+<td align="right">88.00</td>
+<td align="right">49.00</td>
+<td align="right">61.00</td>
+</tr>
+<tr class="even">
+<td align="left">Max.</td>
+<td align="right">454.00</td>
+<td align="right">181.00</td>
+<td align="right">266.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="strategie-pochodzace-z-innych-pakietow" class="section level3">
+<h3>Strategie pochodzące z innych pakietów</h3>
+<p>Funkcja gra działa dobrze na strategiach z innych pakietów. Aby użyć funkcji gra z pakietu <code>SuperFarmerPKEK</code> dla strategii z innego pakietu wystarczy użyć standardowego sformułowania:</p>
+<p><code>SuperFarmerPKEK::gra(strategia=SuperFarmerInnyPakiet::strategia_zInnegoPakietu)</code></p>
+<p>Analogicznie, żeby zastosować jedną z naszych strategii do funkcji gra z innego pakietu użyjemy komendy:</p>
+<p><code>SuperFarmerInnyPakiet::gra(strategia=SuperFarmerPKEK::strategy2)</code></p>
+<p>Jest możliwość zastosowania funkcji <code>porownaj_strategie</code> dla strategii z innych pakietów na przykład:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wykres2=<span class="kw">porownaj_strategie</span>(<span class="dt">strategy1 =</span> SuperFarmer.SuperDziewczyn::strategia_wymian_0_0_0_0, <span class="dt">strategy2=</span> SuperFarmer.SuperDziewczyn::strategia_wymian_1_1_1_1, <span class="dt">strategy3 =</span> SuperFarmerRCNK::strategia_anty_yolo)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wykres2</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /></p>
+<p>Domyślnie argumentami funkcji <code>porownaj_strategie</code>, są odpowiednio <code>SuperFarmerPKEK::strategy1</code>, <code>SuperFarmerPKEK::strategy2</code> i <code>SuperFarmerPKEK::strategy3</code>, dlatego jeżeli zostanie podanych mniej argumentów, w miejsce niepodanych wartości zostanie narysowany wykres odpowiedniej strategii z pakietu <code>SuperFarmerPKEK</code>.</p>
+</div>
+</div>
+<div id="dziaanie-na-innych-pakietach" class="section level2">
+<h2>Działanie na innych pakietach</h2>
+<p>Działanie naszych funkcji z innymi pakietami ilustruje poniższa tabela:</p>
+<table style="width:194%;">
+<colgroup>
+<col width="40%"></col>
+<col width="77%"></col>
+<col width="76%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Pakiet</th>
+<th align="center">SuperFarmerInnyPakiet::gra(SuperFarmerPKEK::strategia)</th>
+<th align="center">SuperFarmerPKEK::gra(SuperFarmerInnyPakiet::strategia)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">SuperFarmer.SuperDziewczyn</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr class="even">
+<td align="center">SuperFarmer.SuperPakiet</td>
+<td align="center">+</td>
+<td align="center">+/-(1_na_wiele działa, wiele_na_wiele nie działa)</td>
+</tr>
+<tr class="odd">
+<td align="center">SuperFarmerADiPR</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr class="even">
+<td align="center">SuperFarmerAGOJZB</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+<tr class="odd">
+<td align="center">SuperFarmerMoc</td>
+<td align="center">Funkcja gra nie jest eksportowana</td>
+<td align="center">+</td>
+</tr>
+<tr class="even">
+<td align="center">SuperFarmerDA</td>
+<td align="center">Funkcja gra nie jest eksportowana</td>
+<td align="center">+</td>
+</tr>
+<tr class="odd">
+<td align="center">SuperFarmerRCNK</td>
+<td align="center">+</td>
+<td align="center">+</td>
+</tr>
+</tbody>
+</table>
+<p>Pakiety zostały ściągnięte z: <a href="https://github.com/pbiecek/ProgramowanieWizualizacja/issues/56">link1</a>,<a href="https://github.com/pbiecek/ProgramowanieWizualizacja/issues/55">link2</a>. (30-12-2016, 12:10)</p>
+<p>Przykład wywołania:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(SuperFarmerRCNK )
+SuperFarmerRCNK::<span class="kw">gra</span>(SuperFarmerPKEK::strategy1) </code></pre></div>
+<pre><code>## [1] 23</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SuperFarmerRCNK::<span class="kw">gra</span>(SuperFarmerPKEK::strategy2)</code></pre></div>
+<pre><code>## [1] 34</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SuperFarmerRCNK::<span class="kw">gra</span>(SuperFarmerPKEK::strategy3)</code></pre></div>
+<pre><code>## [1] 26</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SuperFarmerPKEK::<span class="kw">gra</span>(SuperFarmerRCNK::strategia_anty_yolo)</code></pre></div>
+<pre><code>## [1] 64</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SuperFarmerPKEK::<span class="kw">gra</span>(SuperFarmerRCNK::strategia_yolo)</code></pre></div>
+<pre><code>## [1] 56</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SuperFarmerPKEK::<span class="kw">gra</span>(SuperFarmerRCNK::strategia_nk)</code></pre></div>
+<pre><code>## [1] 84</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+---
+title: "SuperFarmerPKEK"
+author: "Ewelina Karbowiak i Pawe³ Kêdzior"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %/VignetteIndexEntry{SuperFarmerPKEK}
+  %/VignetteEngine{knitr::rmarkdown}
+  %/VignetteEncoding{UTF-8}
+---
+```{r,include=FALSE,message=FALSE,warning=FALSE}
+library("knitr")
+library("SuperFarmerPKEK")
+library("ggplot2")
+library(reshape2)
+```
+
+## Gra w SuperFarmera
+Pakiet `SuperFarmerPKEK` symulujê grê w SuperFarmera w wersji jednoosobowej. 
+Dok³adne zasady gry s¹ dostêpne na stronie: [klik](http://niewidzeprzeszkodzabrze.pl/wp-content/uploads/2016/02/SUPERFARMER.pdf) 
+
+## Dane dostêpne w pakiecie
+Do pakietu zosta³y przy³¹czone nastêpuj¹ce zbiory danych:
+
+* `StadoGracza` - nazwany wektor z aktualnym stanem stada gracza (na pocz¹tku gracz nie posiada ¿adnych zwierz¹t),
+* `max_stado` - nazwany wektor z maksymalna liczba zwierz¹t dostêpn¹ w grze,
+* `kostka1` - wektor nazw zwierz¹t, które znajduj¹ siê na kostce nr 1,
+* `kostka2` - wektor nazw zwierz¹t, które znajduj¹ siê na kostce nr 2,
+* `ceny_w_krolikach` - nazwany wektor wyra¿aj¹cy wartoœæ w królikach poszczególnych zwierz¹t. 
+```{r}
+kable(t(StadoGracza))
+kable(t(max_stado))
+kable(t(kostka1))
+kable(t(kostka2))
+kable(t(ceny_w_krolikach))
+```
+
+Kolejnoœæ zwierz¹t i sposób nazewnictwa zosta³ ustalony przez grupê.
+
+## Funkcja gra
+Funkcja `gra` przeprowadza pojedyncz¹ grê w SuperFarmera i zwraca czas gry.
+Domyœlnie argumenty kostka1, kostka2, oraz StadoGracza, które s¹ zapisane w pakiecie jako zbiory danych, mo¿na zast¹piæ innymi tego samego typu.
+
+`gra(strategia=SuperFarmerPKEK::strategy2, kostka1 = SuperFarmerPKEK::kostka1,kostka2 = SuperFarmerPKEK::kostka2,StadoGracza = SuperFarmerPKEK::StadoGracza)`
+
+Przyk³ad zastosowania:
+
+```{r}
+gra(strategia = strategy3)
+```
+
+## Funkcja badaj_gre i badaj_gre2
+Funkcja `badaj_gre` 10 000 powtarza grê zadan¹ strategi¹ i na tej podstawie wyznacza podstawowe statystyki dotycz¹ce czasu gry.
+Przyk³ad zastosowania:
+```{r, eval=FALSE}
+badaj1<-badaj_gre(strategy2)
+```
+
+```{r, echo=FALSE}
+#save(badaj1,file="badaj1.rda")
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/badaj1.rda")
+```
+
+```{r}
+badaj1
+```
+Funkcja `badaj_gre2` równie¿ powtarza grê 10 000, ale zwraca wektor czasów gry:
+```{r, eval=FALSE}
+badaj2<-badaj_gre2(strategy1)
+```
+
+```{r, echo=FALSE}
+#save(badaj2,file="badaj2.rda")
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/badaj2.rda")
+```
+
+```{r}
+head(badaj2,15)
+```
+Wynik tej funkcji jest obiektem, który daje mo¿liwoœæ dalszej pracy z tymi danymi. Mo¿emy np. narysowaæ wykres:
+```{r}
+badaj3<-melt(badaj2)
+g <- ggplot(badaj3,aes(x=value))+ geom_histogram(aes(fill=..count..),col="black",breaks=seq(0,500,5))+
+  scale_fill_gradient("Count", low = "green", high = "red")
+g
+```
+
+## Strategie
+
+### Strategie dostêpne w pakiecie
+
+W pakiecie s¹ dostêpne trzy strategie: `strategy1`, `strategy2` i `strategy3`.
+
+*`strategy1`: najmniej skomplikowana strategia; zawsze gdy mo¿emy, wymieniamy na wiêksze zwierzê. Gdy wartoœæ stada jest wystarczaj¹ca (przynajmniej 127 królików) wymianimy zwierzêta na brakujêce mniejsze, co koñczy grê. Po testowaniu funkcj¹ `gra()` z pakietu `SuperFarmerAGOJZB` dowiedzieliœmy siê, ¿e jest to strategia oszukañcza.
+
+*`strategy2`: najlepsza pod wzglêdem œredniej liczby tur potrzebnych do zakoñczenia gry. Znów celem strategii jest jak najszybsze kupienie konia. Do tego momentu inwestujemy w króliki oraz ma³ego psa.
+
+*`strategy3`: najbardziej skomplikowana strategia; podzielona jest na 8 czêœci ze wzglêdu na wartoœæ stada. Dobór tych przedzia³ów i stosowanych na nich podstrategii zosta³ wybrany na podstawie wyliczenia wartoœci oczekiwanej.
+
+W pakiecie jest dostêpna funkcja `porownaj_strategie()`, która wywo³ana bez argumentów rysuje wykres skrzypcowy czasu gry dla tych trzech strategii przy powtórzeniu pojedynczej gry 10 000 razy.
+```{r, eval=FALSE}
+wykres<-porownaj_strategie()
+#save(wykres, file="wykres.rda")
+```
+```{r}
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/wykres.rda")
+wykres
+```
+
+```{r,echo=FALSE}
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/a1.rda")
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/a2.rda")
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/a3.rda")
+podsumowanie <- data.frame(cbind(a1,a2,a3))
+names(podsumowanie)<-paste(c("strategy1","strategy2","strategy3"))
+kable(podsumowanie)
+```
+
+### Strategie pochodz¹ce z innych pakietów
+Funkcja gra dzia³a dobrze na strategiach z innych pakietów. Aby u¿yæ funkcji gra z pakietu `SuperFarmerPKEK` dla strategii z innego pakietu wystarczy u¿yæ standardowego sformu³owania:
+
+`SuperFarmerPKEK::gra(strategia=SuperFarmerInnyPakiet::strategia_zInnegoPakietu)`
+
+Analogicznie, ¿eby zastosowaæ jedn¹ z naszych strategii do funkcji gra z innego pakietu u¿yjemy komendy:
+
+`SuperFarmerInnyPakiet::gra(strategia=SuperFarmerPKEK::strategy2)`
+
+Jest mo¿liwoœæ zastosowania funkcji `porownaj_strategie` dla strategii z innych pakietów na przyk³ad:
+
+```{r,eval=FALSE}
+wykres2=porownaj_strategie(strategy1 = SuperFarmer.SuperDziewczyn::strategia_wymian_0_0_0_0, strategy2= SuperFarmer.SuperDziewczyn::strategia_wymian_1_1_1_1, strategy3 = SuperFarmerRCNK::strategia_anty_yolo)
+```
+
+```{r,echo=FALSE}
+#save(wykres2,file="wykres2.rda")
+load("C:/Users/Key/Documents/SuperFarmerPKEK/vignettes/wykres2.rda")
+```
+
+```{r}
+wykres2
+```
+
+Domyœlnie argumentami funkcji `porownaj_strategie`, s¹ odpowiednio `SuperFarmerPKEK::strategy1`, `SuperFarmerPKEK::strategy2` i `SuperFarmerPKEK::strategy3`, dlatego je¿eli zostanie podanych mniej argumentów, w miejsce niepodanych wartoœci zostanie narysowany wykres odpowiedniej strategii z pakietu `SuperFarmerPKEK`.
+
+##Dzia³anie na innych pakietach
+Dzia³anie naszych funkcji z innymi pakietami ilustruje poni¿sza tabela:
+
+| Pakiet                     |SuperFarmerInnyPakiet::gra(SuperFarmerPKEK::strategia) |SuperFarmerPKEK::gra(SuperFarmerInnyPakiet::strategia)|
+|:--------------------------:|:-----------------------------------------------------:|:----------------------------------------------------:|
+|SuperFarmer.SuperDziewczyn  |+                                                      |+                                                     |
+|SuperFarmer.SuperPakiet     |+                                                      |+/-(1_na_wiele dzia³a, wiele_na_wiele nie dzia³a)     |
+|SuperFarmerADiPR            |+                                                      |+                                                     |
+|SuperFarmerAGOJZB           |+                                                      |+                                                     |
+|SuperFarmerMoc              |Funkcja gra nie jest eksportowana                      |+                                                     |
+|SuperFarmerDA               |Funkcja gra nie jest eksportowana                      |+                                                     |
+|SuperFarmerRCNK             |+                                                      |+                                                     |
+
+Pakiety zosta³y œci¹gniête z: [link1](https://github.com/pbiecek/ProgramowanieWizualizacja/issues/56),[link2](https://github.com/pbiecek/ProgramowanieWizualizacja/issues/55). (30-12-2016, 12:10)
+
+Przyk³ad wywo³ania:
+```{r,message=FALSE,warning=FALSE}
+library(SuperFarmerRCNK )
+SuperFarmerRCNK::gra(SuperFarmerPKEK::strategy1) 
+SuperFarmerRCNK::gra(SuperFarmerPKEK::strategy2)
+SuperFarmerRCNK::gra(SuperFarmerPKEK::strategy3)
+SuperFarmerPKEK::gra(SuperFarmerRCNK::strategia_anty_yolo)
+SuperFarmerPKEK::gra(SuperFarmerRCNK::strategia_yolo)
+SuperFarmerPKEK::gra(SuperFarmerRCNK::strategia_nk)
